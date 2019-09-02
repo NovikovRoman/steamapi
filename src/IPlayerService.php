@@ -25,7 +25,8 @@ class IPlayerService extends Category implements CategoryInterface
      */
     public function getSteamLevel($id)
     {
-        $url = $this->buildUrl(self::categoryName(), '/GetSteamLevel/v1/?key={key}&steamids=' . $id);
+        $url = '/GetSteamLevel/v1/?key={key}&input_json={"steamid":' . $id . '}';
+        $url = $this->buildUrl(self::categoryName(), $url);
         $data = $this->get($url);
         return empty($data['player_level']) ? 0 : (int)$data['player_level'];
     }
@@ -39,7 +40,7 @@ class IPlayerService extends Category implements CategoryInterface
     {
         $url = $this->buildUrl(
             self::categoryName(),
-            '/GetOwnedGames/v00001/?include_appinfo=true&key={key}&steamids=' . $id
+            '/GetOwnedGames/v00001/?include_appinfo=true&key={key}&input_json={"steamid":' . $id . '}'
         );
         return $this->get($url);
     }
